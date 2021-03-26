@@ -15,12 +15,6 @@ pipeline {
                 echo "===== REQUIRED: Will build the API project ====="
                 sh "dotnet build src/Todoit.sln"
                 sh "docker build src/. -t mrbacky/todoitapi -f src/API/Dockerfile"
-                withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'DockerHub', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']])
-                {
-                    sh 'docker login -u ${USERNAME} -p ${PASSWORD}'
-                }
-                sh "docker push mrbacky/todoitapi"
-                
             }
         }
         stage("Build database") {
@@ -33,14 +27,19 @@ pipeline {
                 echo "===== REQUIRED: Will execute unit tests of the API project ====="
             }
         }
-        stage("Deliver Web") {
+        stage("Deliver Web to Docker Hub") {
             steps {
                 echo "===== REQUIRED: Will deliver the website to Docker Hub ====="
             }
         }
-        stage("Deliver API") {
+        stage("Deliver API to Docer Hub") {
             steps {
                 echo "===== REQUIRED: Will deliver the API to Docker Hub ====="
+                withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'DockerHub', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']])
+                {
+                    sh 'docker login -u ${USERNAME} -p ${PASSWORD}'
+                }
+                sh "docker push mrbacky/todoitapi"
             }
         }
         stage("Release staging environment") {
