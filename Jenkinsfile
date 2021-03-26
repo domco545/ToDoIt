@@ -1,5 +1,9 @@
 pipeline {
     agent any
+    triggers {
+		cron("0 * * * *")
+		pollSCM("*/5 * * * *")
+	}
     stages {
         stage("Build Web") {
             steps {
@@ -9,6 +13,9 @@ pipeline {
         stage("Build API") {
             steps {
                 echo "===== REQUIRED: Will build the API project ====="
+                sh "dotnet build src/Workouter.sln"
+                sh "docker build . -t mrbacky/todoapi -f API/Dockerfile"
+                sh "docker push mrbacky/todoitapi"
             }
         }
         stage("Build database") {

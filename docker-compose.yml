@@ -1,0 +1,10 @@
+# Please refer https://aka.ms/HTTPSinContainer on how to setup an https developer certificate for your ASP .NET Core service.
+
+version: "3.4"
+services:
+  api:
+    image: mrbacky/todoitapi
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+    ports:
+      - 5555:80

@@ -18,5 +18,12 @@ namespace DAL
         {
             optionsBuilder.UseSqlServer();
         }
+
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            
+            
+        }
     }
 }
