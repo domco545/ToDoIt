@@ -13,7 +13,7 @@ pipeline {
         stage("Build API") {
             steps {
                 echo "===== REQUIRED: Will build the API project ====="
-                sh "dotnet build src/Workouter.sln"
+                sh "dotnet build src/Todoit.sln"
                 sh "docker build . -t mrbacky/todoapi -f API/Dockerfile"
                 withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'DockerHub', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']])
                 {
