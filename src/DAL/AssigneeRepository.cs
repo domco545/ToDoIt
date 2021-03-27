@@ -7,11 +7,19 @@ using Model;
 
 namespace DAL
 {
-    public class AssigneeRepository: IAssigneeRepository
+    public class AssigneeRepository : IAssigneeRepository
     {
+
+        private readonly TodoContext _ctx;
+
+        public AssigneeRepository(TodoContext ctx)
+        {
+            ctx = _ctx;
+        }
+
         public List<Assignee> GetAllAssignees()
         {
-            throw new NotImplementedException();
+            return _ctx.Assignees.ToList();
         }
 
         public Assignee CreateNewAssignee(Assignee asg)
