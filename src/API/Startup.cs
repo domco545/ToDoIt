@@ -30,12 +30,10 @@ namespace API
         public void ConfigureServices(IServiceCollection services)
         {
             
-            
-            
             services.AddControllers();
             services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo {Title = "API", Version = "v1"}); });
             services.AddDbContext<TodoContext>(b => b
-                .UseSqlServer(Environment.GetEnvironmentVariable("DatabaseConnectionString"))
+                .UseSqlServer(Environment.GetEnvironmentVariable("DATABASE_CONNECTION_STRING"))
                 .LogTo(Console.WriteLine)
             );
 
@@ -44,9 +42,6 @@ namespace API
 
             services.AddScoped<ITaskService, TaskService>();
             services.AddScoped<IAssigneeService, AssigneeService>();
-
-
-            
 
         }
 

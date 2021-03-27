@@ -2,9 +2,32 @@
 
 version: "3.4"
 services:
+  todoit-db:
+    build: ./db/docker
+    restart: always
+    ports:
+      - 5100:1433
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: HelloW0rld
+      MSSQL_DB: Todoit
+      DATABASE_CONNECTION_STRING: jdbc:sqlserver://todoit-db;databaseName=Todoit
+    volumes:
+      - ./db/data:/var/opt/mssql/data
   api:
     image: mrbacky/todoitapi
     environment:
       ASPNETCORE_ENVIRONMENT: Development
+    depends_on:
+      - todoit-db
     ports:
-      - 5555:80
+      - 5200:80
+
+  flyway:
+    image: flyway/flyway
+    command: migrate
+    volumes:
+      - ./db:/flyway/sql
+      - ./db:/flyway/conf
+    depends_on:
+      - todoit-db
