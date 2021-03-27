@@ -18,15 +18,12 @@ namespace DAL
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-
-
-
-            modelBuilder.Entity<Assignee>().HasData
-                (
-                new Assignee { Id = 1, Name = "Mike" },
-                new Assignee { Id = 1, Name = "Frank" },
-                new Assignee { Id = 1, Name = "Kim" }
-                );
+            // modelBuilder.Entity<Assignee>().HasData
+            // (
+            //     new Assignee {Id = 1, Name = "Mike"},
+            //     new Assignee {Id = 1, Name = "Frank"},
+            //     new Assignee {Id = 1, Name = "Kim"}
+            // );
 
         }
     }

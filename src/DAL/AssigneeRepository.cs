@@ -14,7 +14,7 @@ namespace DAL
 
         public AssigneeRepository(TodoContext ctx)
         {
-            ctx = _ctx;
+            _ctx = ctx;
         }
 
         public List<Assignee> GetAllAssignees()
