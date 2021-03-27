@@ -7,7 +7,7 @@ using Model;
 namespace API.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class AssigneeController : Controller
     {
         private readonly IAssigneeService _assigneeService;
