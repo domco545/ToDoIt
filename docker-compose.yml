@@ -2,6 +2,7 @@
 
 version: "3.4"
 services:
+  
   todoit-db:
     build: ./db/docker
     restart: always
@@ -14,6 +15,7 @@ services:
       DATABASE_CONNECTION_STRING: jdbc:sqlserver://todoit-db;databaseName=Todoit
     volumes:
       - ./db/data:/var/opt/mssql/data
+      
   api:
     image: mrbacky/todoitapi
     environment:
