@@ -8,4 +8,4 @@ CREATE TABLE Tasks(
     AssigneeId INT NOT NULL,
     DueDate DATETIME2,
     isCompleted BIT NOT NULL
-);
+);  

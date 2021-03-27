@@ -30,13 +30,15 @@ namespace API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            
             services.AddControllers();
             services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo {Title = "API", Version = "v1"}); });
-            services.AddDbContext<TodoContext>(b => b
-                .UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))
-                .LogTo(Console.WriteLine)
-            );
+            services.AddDbContext<TodoContext>(options =>
+            {
+                options
+                    .UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))
+                    .LogTo(Console.WriteLine);
+                
+            });
 
             services.AddScoped<IAssigneeRepository, AssigneeRepository>();
             services.AddScoped<ITaskRepository, TaskRepository>();
@@ -44,7 +46,7 @@ namespace API
             services.AddScoped<ITaskService, TaskService>();
             services.AddScoped<IAssigneeService, AssigneeService>();
 
-            
+
             services.AddControllers().AddNewtonsoftJson(option =>
             {
                 option.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
