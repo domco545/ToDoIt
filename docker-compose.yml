@@ -12,7 +12,6 @@ services:
       ACCEPT_EULA: "Y"
       SA_PASSWORD: HelloW0rld
       MSSQL_DB: Todoit
-      DATABASE_CONNECTION_STRING: jdbc:sqlserver://todoit-db;databaseName=Todoit
     volumes:
       - ./db/data:/var/opt/mssql/data
       
