@@ -1,29 +1,52 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Task = Model.Task;
 
 namespace DAL
 {
-    public class TaskRepository: ITaskRepository
+
+    public class TaskRepository : ITaskRepository
     {
-        public List<Task> GetTasksByQuerry(string querry)
+        private readonly TodoContext _ctx;
+
+        public TaskRepository(TodoContext ctx)
         {
-            throw new NotImplementedException();
+            _ctx = ctx;
+        }
+        public List<Task> GetTasksByDescription(string description)
+        {
+            return _ctx.Tasks.Where(x => x.Description.Contains(description)).ToList();
         }
 
         public Task CreateTask(Task task)
         {
-            throw new NotImplementedException();
+            task.IsCompleted = false;
+            _ctx.Tasks.Add(task);
+            _ctx.SaveChanges();
+            if (task.Id > 0)
+                return task;
+            throw new Exception("Task can be insert");
         }
 
         public Task UpdateTask(Task task)
         {
-            throw new NotImplementedException();
+            _ctx.Entry(task).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            _ctx.SaveChanges();
+            return task;
         }
 
         public Task DeleteTask(int id)
         {
-            throw new NotImplementedException();
+            var entity = _ctx.Tasks.FirstOrDefault(x => x.Id == id);
+            if (entity != null)
+            {
+                _ctx.Entry(entity).State = Microsoft.EntityFrameworkCore.EntityState.Deleted;
+                _ctx.SaveChanges();
+                return entity;
+            }
+            throw new Exception("Task Not Found!");
+
         }
     }
 }

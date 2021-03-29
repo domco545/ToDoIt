@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DAL;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,26 +8,21 @@ using Task = Model.Task;
 
 namespace BLL
 {
-    public class TaskService: ITaskService
+    public class TaskService : ITaskService
     {
-        public List<Task> GetTasksByQuerry(string querry)
-        {
-            throw new NotImplementedException();
-        }
+        private readonly ITaskRepository _taskRepository;
 
-        public Task CreateTask(Task task)
+        public TaskService(ITaskRepository taskRepository)
         {
-            throw new NotImplementedException();
+            _taskRepository = taskRepository;
         }
+        public List<Task> GetTasksByDescription(string description) => _taskRepository.GetTasksByDescription(description);
 
-        public Task UpdateTask(Task task)
-        {
-            throw new NotImplementedException();
-        }
+        public Task CreateTask(Task task) => _taskRepository.CreateTask(task);
 
-        public Task DeleteTask(int id)
-        {
-            throw new NotImplementedException();
-        }
+        public Task UpdateTask(Task task) => _taskRepository.UpdateTask(task);
+
+        public Task DeleteTask(int id) => _taskRepository.DeleteTask(id);
+
     }
 }
