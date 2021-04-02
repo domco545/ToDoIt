@@ -20,24 +20,40 @@ namespace API
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
-        {
-            Configuration = configuration;
-        }
 
         public IConfiguration Configuration { get; }
+        private IWebHostEnvironment Env { get; }
+
+        public Startup(IConfiguration configuration, IWebHostEnvironment webHostEnvironment)
+        {
+            Configuration = configuration;
+            Env = webHostEnvironment;
+        }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var loggerFactory = LoggerFactory.Create(builder => { builder.AddConsole(); });
+
             services.AddControllers();
-            services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo {Title = "API", Version = "v1"}); });
+            services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" }); });
+
+            if (Env.IsDevelopment())
+                services.AddDbContext<TodoContext>(opt =>
+                {
+                    opt
+                        .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking)
+                        .UseLoggerFactory(loggerFactory)
+                        .UseSqlite("Data Source=UnitedMarketsSqLite.db")
+                        .EnableSensitiveDataLogging(); // BE AWARE ...   only in dev mode
+                }, ServiceLifetime.Transient);
+
             services.AddDbContext<TodoContext>(options =>
             {
                 options
-                    .UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))
+                    .UseSqlServer(Configuration["DATABASE_CONNECTION_STRING"])
                     .LogTo(Console.WriteLine);
-                
+
             });
 
             services.AddScoped<IAssigneeRepository, AssigneeRepository>();
