@@ -9,7 +9,6 @@ namespace DAL
 {
     public class AssigneeRepository : IAssigneeRepository
     {
-
         private readonly TodoContext _ctx;
 
         public AssigneeRepository(TodoContext ctx)
@@ -27,12 +26,11 @@ namespace DAL
             _ctx.Assignees.Add(assignee);
             _ctx.SaveChanges();
             return assignee;
-
         }
 
         public Assignee DeleteAssignee(int id)
         {
-             var entity =_ctx.Assignees.FirstOrDefault(x => x.Id == id);
+            var entity = _ctx.Assignees.FirstOrDefault(x => x.Id == id);
             if (entity != null)
             {
                 var hasTask = _ctx.Tasks.Any(x => x.AssigneeId == id);
@@ -40,8 +38,8 @@ namespace DAL
                 _ctx.Assignees.Remove(entity);
                 _ctx.SaveChanges();
                 return entity;
-
             }
+
             throw new Exception("Entity Not found");
         }
     }

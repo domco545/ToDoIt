@@ -2,7 +2,6 @@
 
 version: "3.4"
 services:
-  
   todoit-db:
     build: ./db/docker
     restart: always
@@ -12,11 +11,9 @@ services:
       ACCEPT_EULA: "Y"
       SA_PASSWORD: HelloW0rld
       MSSQL_DB: Todoit
-      DATABASE_CONNECTION_STRING: "Server=todoit-db,5200;Database=Todoit;User Id=sa;Password=HelloW0rld;"
-  
     volumes:
       - ./db/data:/var/opt/mssql/data
-      
+
   api:
     image: mrbacky/todoitapi
     environment:

@@ -33,20 +33,11 @@ namespace API
             services.AddControllers();
             services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" }); });
 
-            if (Env.IsDevelopment())
-                services.AddDbContext<TodoContext>(opt =>
-                {
-                    opt
-                        .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking)
-                        .UseLoggerFactory(loggerFactory)
-                        .UseSqlite("Data Source=UnitedMarketsSqLite.db")
-                        .EnableSensitiveDataLogging(); // BE AWARE ...   only in dev mode
-                }, ServiceLifetime.Transient);
 
             services.AddDbContext<TodoContext>(options =>
             {
                 options
-                    .UseSqlServer(Configuration["DATABASE_CONNECTION_STRING"])
+                    .UseSqlServer(Configuration.GetConnectionString("TodoDBConnectionString"))
                     .LogTo(Console.WriteLine);
 
             });
