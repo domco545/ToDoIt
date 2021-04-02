@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using BLL;
 using Microsoft.AspNetCore.Mvc;
 using Model;
 
@@ -9,6 +10,13 @@ namespace API.Controllers
     [Route("api/[controller]")]
     public class TaskController : Controller
     {
+        private readonly ITaskService _taskService;
+
+        public TaskController(ITaskService taskService)
+        {
+            _taskService = taskService;
+        }
+
 
         //  GET test
         [HttpGet("{id}")]
@@ -19,28 +27,61 @@ namespace API.Controllers
 
         // GET task/
         [HttpGet]
-        public IEnumerable<Task> Get(string searchTerm)
+        public ActionResult<IEnumerable<Task>> Get(string searchTerm)
         {
-            throw new NotImplementedException();
+            try
+            {
+                return Ok(_taskService.GetTasksByDescription(searchTerm));
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpPost]
-        public int Post(Task task)
+        public IActionResult Post(Task task)
         {
-            throw new NotImplementedException();
+            try
+            {
+                return Ok(_taskService.CreateTask(task));
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpPut]
-        public void Put(Task task)
+        public IActionResult Put(Task task)
         {
-            throw new NotImplementedException();
+            try
+            {
+                return Ok(_taskService.UpdateTask(task));
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest(ex.Message);
+
+            }
         }
 
 
         [HttpDelete]
-        public void Delete(int id)
+        public IActionResult Delete(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                return Ok(_taskService.DeleteTask(id));
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

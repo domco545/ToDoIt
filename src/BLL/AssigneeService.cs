@@ -23,14 +23,14 @@ namespace BLL
             return _assigneeRepo.GetAllAssignees();
         }
 
-        public Assignee CreateNewAssignee(Assignee asg)
+        public Assignee CreateNewAssignee(Assignee assignee)
         {
-            throw new NotImplementedException();
+            return _assigneeRepo.CreateNewAssignee(assignee);
         }
 
         public Assignee DeleteAssignee(int id)
         {
-            throw new NotImplementedException();
+            return _assigneeRepo.DeleteAssignee(id);
         }
     }
 }

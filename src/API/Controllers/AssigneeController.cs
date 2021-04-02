@@ -31,15 +31,31 @@ namespace API.Controllers
         }
 
         [HttpPost]
-        public int Post(Assignee task)
+        public IActionResult Post(Assignee assignee)
         {
-            throw new NotImplementedException();
+            try
+            {
+                return Ok(_assigneeService.CreateNewAssignee(assignee));
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpDelete]
-        public void Delete(int id)
+        public IActionResult Delete(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                return Ok(_assigneeService.DeleteAssignee(id));
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest(ex.Message);
+            }
         }
     }
 }
