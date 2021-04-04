@@ -8,7 +8,8 @@ namespace DAL
 {
     public interface ITaskRepository
     {
-        public List<Task> GetTasksByDescription(string description);
+
+        FilteredList<Task> GetTasks(Filter filter);
         public Task CreateTask(Task task);
         public Task UpdateTask(Task task);
         public Task DeleteTask(int id);

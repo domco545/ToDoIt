@@ -27,15 +27,14 @@ namespace API.Controllers
 
         // GET task/
         [HttpGet]
-        public ActionResult<IEnumerable<Task>> Get(string searchTerm)
+        public ActionResult<IEnumerable<Task>> Get([FromQuery] Filter filter)
         {
             try
             {
-                return Ok(_taskService.GetTasksByDescription(searchTerm));
+                return Ok(_taskService.GetTasks(filter));
             }
             catch (Exception ex)
             {
-
                 return BadRequest(ex.Message);
             }
         }

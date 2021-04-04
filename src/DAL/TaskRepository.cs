@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Model;
 using Task = Model.Task;
 
 namespace DAL
@@ -47,6 +48,31 @@ namespace DAL
             }
             throw new Exception("Task Not Found!");
 
+        }
+
+        public Model.FilteredList<Task> GetTasks(Model.Filter filter)
+        {
+            var filteredList = new FilteredList<Task> { FilterUsed = filter };
+            var taskList = new List<Task>();
+
+            if (filter.SearchField != null && filter.SearchValue != null)
+            {
+                switch (filter.SearchField)
+                {
+                    case "Description":
+                        taskList = _ctx.Tasks.Where(p => p.Description.Contains(filter.SearchValue)).ToList();
+                        break;
+                    default:
+                        break;
+                }
+                filteredList.List = taskList;
+                filteredList.TotalCount = taskList.Count();
+                return filteredList;
+            }
+
+            filteredList.List = _ctx.Tasks.ToList();
+            filteredList.TotalCount = _ctx.Tasks.Count();
+            return filteredList;
         }
     }
 }
