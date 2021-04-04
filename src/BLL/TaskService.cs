@@ -16,7 +16,6 @@ namespace BLL
         {
             _taskRepository = taskRepository;
         }
-        public List<Task> GetTasksByDescription(string description) => _taskRepository.GetTasksByDescription(description);
 
         public Task CreateTask(Task task) => _taskRepository.CreateTask(task);
 
@@ -24,5 +23,19 @@ namespace BLL
 
         public Task DeleteTask(int id) => _taskRepository.DeleteTask(id);
 
+        public Model.FilteredList<Task> GetTasks(Model.Filter filter)
+        {
+            if (!string.IsNullOrEmpty(filter.SearchField) && string.IsNullOrEmpty(filter.SearchValue))
+            {
+                throw new ArgumentException("searchValue cannot be null if searchField is defined.", nameof(filter));
+            }
+
+            if (string.IsNullOrEmpty(filter.SearchField) && !string.IsNullOrEmpty(filter.SearchValue))
+            {
+                throw new ArgumentException("searchField cannot be null if searchValue is defined.", nameof(filter));
+            }
+
+            return _taskRepository.GetTasks(filter);
+        }
     }
 }
