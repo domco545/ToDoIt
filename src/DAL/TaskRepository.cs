@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Model;
 using Task = Model.Task;
+using Microsoft.EntityFrameworkCore;
+
 
 namespace DAL
 {
@@ -60,7 +62,7 @@ namespace DAL
                 switch (filter.SearchField)
                 {
                     case "Description":
-                        taskList = _ctx.Tasks.Where(p => p.Description.Contains(filter.SearchValue)).ToList();
+                        taskList = _ctx.Tasks.Include(t => t.Assignee).Where(p => p.Description.Contains(filter.SearchValue)).ToList();
                         break;
                     default:
                         break;
@@ -70,7 +72,7 @@ namespace DAL
                 return filteredList;
             }
 
-            filteredList.List = _ctx.Tasks.ToList();
+            filteredList.List = _ctx.Tasks.Include(t => t.Assignee).ToList();
             filteredList.TotalCount = _ctx.Tasks.Count();
             return filteredList;
         }
