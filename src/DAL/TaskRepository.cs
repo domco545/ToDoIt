@@ -74,5 +74,23 @@ namespace DAL
             filteredList.TotalCount = _ctx.Tasks.Count();
             return filteredList;
         }
+
+        public Task UpdateTaskStatus(int id, bool isCompleted)
+        {
+
+            var task = _ctx.Tasks.FirstOrDefault(t => t.Id == id);
+            task.IsCompleted = isCompleted;
+            _ctx.Tasks.Attach(task);
+            _ctx.Entry(task).Property(x => x.IsCompleted).IsModified = true;
+            _ctx.SaveChanges();
+
+            return _ctx.Tasks.FirstOrDefault(t => t.Id == id);
+            //_ctx.Tasks.FirstOrDefault(t => t.)
+        }
+
+        public Task FindById(int id)
+        {
+            return _ctx.Tasks.FirstOrDefault(t => t.Id == id);
+        }
     }
 }

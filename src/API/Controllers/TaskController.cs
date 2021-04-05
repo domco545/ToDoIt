@@ -25,6 +25,8 @@ namespace API.Controllers
             return "test " + id;
         }
 
+
+
         // GET task/
         [HttpGet]
         public ActionResult<IEnumerable<Task>> Get([FromQuery] Filter filter)
@@ -68,6 +70,19 @@ namespace API.Controllers
             }
         }
 
+        [HttpPut("updateStatus/{id}")]
+        public IActionResult UpdateTaskStatus(int id, [FromBody] TaskStatusUpdateDto taskDto)
+        {
+            try
+            {
+                return Ok(_taskService.UpdateTaskStatus(id, taskDto.IsCompleted));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+
+            }
+        }
 
         [HttpDelete]
         public IActionResult Delete(int id)
