@@ -11,6 +11,9 @@ namespace BLL
         FilteredList<Task> GetTasks(Filter filter);
         public Task CreateTask(Task task);
         public Task UpdateTask(Task task);
+        public Task UpdateTaskStatus(int id, bool isCompleted);
         public Task DeleteTask(int id);
+
+
     }
 }

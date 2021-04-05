@@ -58,6 +58,13 @@ namespace UnitTest
         }
 
 
+        [Fact]
+        public void UpdateTaskStatus_ShouldCallTaskRepo_Once()
+        {
+            _taskService.UpdateTaskStatus(1, true);
+            _taskMockRepo.Verify(repo => repo.UpdateTaskStatus(1, true), Times.Once);
+        }
+
     }
 
 }
