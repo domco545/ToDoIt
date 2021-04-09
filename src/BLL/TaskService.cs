@@ -18,7 +18,7 @@ namespace BLL
         }
 
         public Task CreateTask(Task task) => _taskRepository.CreateTask(task);
-
+    
         public Task UpdateTask(Task task) => _taskRepository.UpdateTask(task);
 
         public Task DeleteTask(int id) => _taskRepository.DeleteTask(id);
