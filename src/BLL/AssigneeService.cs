@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BLL.Validators;
 using DAL;
 using Model;
 
@@ -25,6 +26,7 @@ namespace BLL
 
         public Assignee CreateNewAssignee(Assignee assignee)
         {
+            new AssigneeValidator().ValidateAssignee(assignee);
             return _assigneeRepo.CreateNewAssignee(assignee);
         }
 
