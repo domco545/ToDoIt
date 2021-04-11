@@ -61,8 +61,17 @@ namespace DAL
             {
                 switch (filter.SearchField)
                 {
-                    case "Description":
-                        taskList = _ctx.Tasks.Include(t => t.Assignee).Where(p => p.Description.Contains(filter.SearchValue)).ToList();
+                    case "Description": //Where(p => p.Description.Contains(filter.SearchValue))
+                        taskList = _ctx.Tasks.Select(t => new Task()
+                        {
+                            Id = t.Id,
+                            AssigneeId = t.AssigneeId,
+                            Assignee = t.Assignee,
+                            Description = t.Description,
+                            DueDate = t.DueDate,
+                            IsCompleted = t.IsCompleted
+
+                        }).Where(p => p.Description.Contains(filter.SearchValue)).ToList();
                         break;
                     default:
                         break;
@@ -72,7 +81,16 @@ namespace DAL
                 return filteredList;
             }
 
-            filteredList.List = _ctx.Tasks.Include(t => t.Assignee).ToList();
+            filteredList.List = _ctx.Tasks.Select(t => new Task()
+            {
+                Id = t.Id,
+                AssigneeId = t.AssigneeId,
+                Assignee = t.Assignee,
+                Description = t.Description,
+                DueDate = t.DueDate,
+                IsCompleted = t.IsCompleted
+
+            });
             filteredList.TotalCount = _ctx.Tasks.Count();
             return filteredList;
         }
