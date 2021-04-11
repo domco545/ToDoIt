@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BLL.Validators;
 using Task = Model.Task;
 
 namespace BLL
@@ -16,10 +17,17 @@ namespace BLL
         {
             _taskRepository = taskRepository;
         }
+        public Task CreateTask(Task task)
+        {
+            new TaskValidator().ValidateTask(task);
+            return _taskRepository.CreateTask(task);
+        }
 
-        public Task CreateTask(Task task) => _taskRepository.CreateTask(task);
-    
-        public Task UpdateTask(Task task) => _taskRepository.UpdateTask(task);
+        public Task UpdateTask(Task task)
+        {
+            new TaskValidator().ValidateTask(task);
+            return _taskRepository.UpdateTask(task);
+        }
 
         public Task DeleteTask(int id) => _taskRepository.DeleteTask(id);
 
