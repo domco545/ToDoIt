@@ -23,7 +23,7 @@ namespace BLL.Validators
                 throw new InvalidDataException("Task description has to be at least 5 characters long");
             }
 
-            if (task.Assignee == null)
+            if (task.AssigneeId == null)
             {
                 throw new InvalidDataException("Task has to be assigned to someone");
             } 
