@@ -23,13 +23,18 @@ namespace API.Controllers
         }
 
 
-        //  GET test
         [HttpGet("{id}")]
-        public string Get(int id)
+        public ActionResult<Task> GetById(int id)
         {
-            return "test " + id;
+            try
+            {
+                return _taskService.GetById(id);
+            }
+            catch (System.Exception e)
+            {
+                return StatusCode(500, e.Message);
+            }
         }
-
 
 
         // GET task/

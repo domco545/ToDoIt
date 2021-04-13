@@ -48,9 +48,14 @@ namespace BLL
 
         public Task UpdateTaskStatus(int id, bool isCompleted)
         {
-            
+
 
             return _taskRepository.UpdateTaskStatus(id, isCompleted);
+        }
+
+        public Task GetById(int id)
+        {
+            return _taskRepository.GetById(id);
         }
     }
 }

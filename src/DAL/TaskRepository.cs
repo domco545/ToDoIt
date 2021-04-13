@@ -105,12 +105,13 @@ namespace DAL
             _ctx.SaveChanges();
 
             return _ctx.Tasks.FirstOrDefault(t => t.Id == id);
-            //_ctx.Tasks.FirstOrDefault(t => t.)
         }
 
-        public Task FindById(int id)
+        public Task GetById(int id)
         {
             return _ctx.Tasks.FirstOrDefault(t => t.Id == id);
         }
+
+
     }
 }

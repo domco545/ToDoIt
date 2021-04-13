@@ -8,6 +8,8 @@ namespace BLL
 {
     public interface ITaskService
     {
+
+        Task GetById(int id);
         FilteredList<Task> GetTasks(Filter filter);
         public Task CreateTask(Task task);
         public Task UpdateTask(Task task);
