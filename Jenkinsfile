@@ -7,6 +7,7 @@ pipeline {
         stage("Build Web") {
             steps {
                 echo "===== OPTIONAL: Will build the website (if needed) ====="
+                sh "node -v"
             }
         }
         stage("Build API") {
