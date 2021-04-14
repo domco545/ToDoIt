@@ -22,11 +22,11 @@ namespace BLL.Validators
             {
                 throw new InvalidDataException("Task description has to be at least 5 characters long");
             }
-
-            if (task.AssigneeId == null)
+            // Id is an int and int is never null 
+            /*if (string.IsNullOrEmpty(task.AssigneeId.ToString()))
             {
-                throw new InvalidDataException("Task has to be assigned to someone");
-            } 
+                throw new NullReferenceException("Task has to be assigned to someone");
+            }*/ 
         }
     }
 }
